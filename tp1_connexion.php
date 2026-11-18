@@ -1,4 +1,12 @@
 <?php
+
+try {
+    $base = new PDO('mysql:host=localhost;dbname=ludotheque', 'root', '');
+    $base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Connexion réussie !";
+} catch (Exception $e) {
+    die('Erreur : ' . $e->getMessage());
+}
 /*
   TP 1 – SE CONNECTER À LA BASE DE DONNÉES
 
@@ -10,5 +18,3 @@
 
   Expérience : remplacer "ludotheque" par "ludotek". Quel message obtenez-vous ?
 */
-
-?>
