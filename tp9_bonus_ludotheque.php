@@ -17,15 +17,23 @@
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="utf-8">
     <title>Ma ludothèque</title>
 </head>
+
 <body>
     <h1>Ma ludothèque</h1>
 
     <table border="1">
-        <tr><th>Titre</th><th>Genre</th><th>Année</th><th>Note</th><th></th></tr>
+        <tr>
+            <th>Titre</th>
+            <th>Genre</th>
+            <th>Année</th>
+            <th>Note</th>
+            <th></th>
+        </tr>
         <?php
 
         ?>
@@ -40,4 +48,5 @@
         <button type="submit">Ajouter</button>
     </form>
 </body>
+
 </html>
