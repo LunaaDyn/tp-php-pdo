@@ -17,4 +17,6 @@ try {
   4. En cas d'erreur, afficher le message d'erreur et arrêter le script.
 
   Expérience : remplacer "ludotheque" par "ludotek". Quel message obtenez-vous ?
+
+  Réponse : Une erreur, car il n'y a aucune base avec le nom "ludotek".
 */

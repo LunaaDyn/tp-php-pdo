@@ -12,7 +12,5 @@
   Vérifier le résultat avec la page du TP 3.
 
   Question : que se passerait-il avec DELETE FROM jeu sans WHERE ?
-  Réponse :
+  Réponse : ça supprimerait tout
 */
-
-?>

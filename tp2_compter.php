@@ -7,7 +7,7 @@
   Expérience : ajouter un jeu dans phpMyAdmin puis recharger la page.
 -->
 <?php
-require_once("connexion.php");
+require_once "connexion.php";
 
 try {
     $sql = "SELECT * FROM jeu";

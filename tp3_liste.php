@@ -23,7 +23,7 @@
             <th>Note</th>
         </tr>
         <?php
-        require_once("connexion.php");
+        require_once "connexion.php";
 
         try {
             $sql = "SELECT * FROM jeu";

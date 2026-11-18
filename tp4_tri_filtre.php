@@ -12,34 +12,70 @@
 -->
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="utf-8">
     <title>TP 4 - Trier et filtrer</title>
 </head>
+
 <body>
 
-<?php
-require 'connexion.php';
-?>
+    <?php
 
-<h2>Classement</h2>
-<ul>
-<?php
+    require_once "connexion.php";
 
-?>
-</ul>
+    function LoadGames(PDO $base, string $extraSQL, string $type): void
+    {
+        try {
+            $sql = "SELECT * FROM jeu " . $extraSQL;
 
-<h2>Jeux récents</h2>
-<ul>
-<?php
+            $result = $base->prepare($sql);
 
-?>
-</ul>
+            $result->execute();
 
-<h2>Jeux de sport</h2>
-<?php
+            if ($type == "Sport") echo "<p>" .  $result->rowCount() . " jeu(x) de sport :</p><ul>";
+            while ($line = $result->fetch(PDO::FETCH_ASSOC)) {
+                $types = [
+                    "Ranking" => $line["note"] . "/20",
+                    "Recent" => "(" . $line["annee"] . ")",
+                    "Sport" => null
+                ];
 
-?>
+                if ($type != "Sport") {
+                    echo "<li id=\"" . $line["id"] . "\">" . $line["titre"] . PHP_EOL . $types[$type] . "</li>";
+                } else {
+                    echo "<li id=\"" . $line["id"] . "\">" . $line["titre"] . "</li>";
+                }
+            }
+
+            if ($type == "Sport") echo "</ul>";
+
+            $result->closeCursor();
+        } catch (Exception $e) {
+            die('Erreur : ' . $e->getMessage());
+        }
+    }
+    ?>
+
+    <h2>Classement</h2>
+    <ul>
+        <?php
+        LoadGames($base, "ORDER BY note DESC, titre", "Ranking");
+        ?>
+    </ul>
+
+    <h2>Jeux récents</h2>
+    <ul>
+        <?php
+        LoadGames($base, "ORDER BY annee DESC, titre", "Recent");
+        ?>
+    </ul>
+
+    <h2>Jeux de sport</h2>
+    <?php
+    LoadGames($base, "WHERE genre = \"Sport\"", "Sport");
+    ?>
 
 </body>
+
 </html>
