@@ -11,23 +11,49 @@
 -->
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="utf-8">
     <title>TP 7 - Ajouter un jeu</title>
 </head>
+
 <body>
     <h1>Ajouter un jeu</h1>
 
     <form method="post">
         <p>Titre : <input type="text" name="titre" required></p>
         <p>Genre : <input type="text" name="genre" required></p>
-        <p>Année : <input type="number" name="annee" required></p>
+        <p>Année : <input type="number" name="annee" min="1970" max="2027" required></p>
         <p>Note : <input type="number" name="note" min="0" max="20" required></p>
         <button type="submit">Ajouter</button>
     </form>
 
-<?php
+    <?php
+    require_once "connexion.php";
 
-?>
+    $sql = "INSERT INTO jeu (titre, genre, annee, note) VALUES (:titre, :genre, :annee, :note)";
+
+    $result = $base->prepare($sql);
+
+    if (!empty($_POST["titre"]) && !empty($_POST["genre"]) && !empty($_POST["annee"]) && !empty($_POST["note"])) {
+        $result->execute([
+            "titre" => $_POST["titre"],
+            "genre" => $_POST["genre"],
+            "annee" => $_POST["annee"],
+            "note" => $_POST["note"],
+        ]);
+
+        echo "<p>Jeu ajouté ! Son id est : " . $base->lastInsertId() . "</p>";
+
+        echo "<br/><br/>";
+
+        echo "<a href=\"./tp3_liste\">Liste de Jeux<a/>";
+
+        $result->closeCursor();
+
+        $_POST = [];
+    }
+    ?>
 </body>
+
 </html>

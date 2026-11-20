@@ -11,10 +11,12 @@
 -->
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="utf-8">
     <title>TP 6 - Recherche par genre</title>
 </head>
+
 <body>
 
     <form method="get">
@@ -28,8 +30,26 @@
         <button type="submit">Rechercher</button>
     </form>
 
-<?php
+    <?php
+    require_once "connexion.php";
 
-?>
+    $sql = "SELECT titre, note FROM jeu WHERE genre = ?";
+
+    $result = $base->prepare($sql);
+
+    if (!empty($_GET["genre"])) {
+        $result->execute([$_GET["genre"]]);
+
+        echo "<p>" . $result->rowCount() . " jeu(x) trouvés</p><br/>";
+        echo "<ul>";
+        while ($line = $result->fetch(PDO::FETCH_ASSOC)) {
+            echo "<li>" . $line["titre"] . " : " . $line["note"] . "/20</li>";
+        }
+        echo "</ul>";
+    }
+
+    $result->closeCursor();
+    ?>
 </body>
+
 </html>

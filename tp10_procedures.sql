@@ -1,0 +1,21 @@
+-- TP 10 – PROCÉDURES STOCKÉES (partie SQL)
+-- À exécuter dans phpMyAdmin : base ludotheque > onglet SQL.
+--
+-- Créer les 4 procédures suivantes :
+--
+-- 1. liste_jeux()
+--    Renvoie tous les jeux (id, titre, genre, annee, note), du mieux noté au moins bien noté.
+--
+-- 2. jeux_par_genre(genre)
+--    Renvoie le titre et la note des jeux du genre donné, triés par titre.
+--
+-- 3. compter_par_genre(genre, nombre)
+--    Range dans le paramètre de sortie "nombre" le nombre de jeux du genre donné.
+--
+-- 4. ajouter_jeu(titre, genre, annee, note)
+--    Ajoute un jeu dans la table jeu.
+--
+-- Tester chaque procédure avec CALL avant de passer au PHP.
+-- Test attendu : compter_par_genre pour 'Sport' donne 2.
+
+USE ludotheque;
