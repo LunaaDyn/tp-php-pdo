@@ -71,8 +71,8 @@ $gameAmount = $result->rowCount();
         <?php
         while ($line = $result->fetch(PDO::FETCH_ASSOC)) {
             echo "<tr id=\"" . $line["id"] . "\">";
-            echo "<td>" . $line["titre"] . "</td>";
-            echo "<td>" . $line["genre"] . "</td>";
+            echo "<td>" . htmlspecialchars($line["titre"]) . "</td>";
+            echo "<td>" . htmlspecialchars($line["genre"]) . "</td>";
             echo "<td>" . $line["annee"] . "</td>";
             echo "<td>" . $line["note"] . "/20</td>";
             echo "<td><a href=\"?delete=" . $line["id"] . "\">Supprimer</a></td>";
