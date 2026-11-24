@@ -62,7 +62,8 @@ INSERT INTO editeur (id, nom, pays) VALUES
 (6, 'Innersloth',         'États-Unis'),
 (7, 'ConcernedApe',       'États-Unis'),
 (8, 'The Tetris Company', 'États-Unis'),
-(9, 'Ubisoft',            'France');
+(9, 'Ubisoft',            'France'),
+(10, 'Sega',              'Japon');
 
 INSERT INTO jeu (id, titre, genre, annee, note, editeur_id) VALUES
 (1,  'Minecraft',                'Aventure',  2011, 18, 2),
@@ -76,7 +77,8 @@ INSERT INTO jeu (id, titre, genre, annee, note, editeur_id) VALUES
 (9,  'Gran Turismo 7',           'Course',    2022, 15, 5),
 (10, 'Stardew Valley',           'Aventure',  2016, 17, 7),
 (11, 'Super Mario Odyssey',      'Aventure',  2017, 19, 1),
-(12, 'Splatoon 3',               'Action',    2022, 16, 1);
+(12, 'Splatoon 3',               'Action',    2022, 16, 1),
+(13, 'Sonic Mania',              'Action',    2017, 18, 10);
 
 INSERT INTO membre (id, prenom, nom, ville) VALUES
 (1, 'Léa',    'Martin',  'Paris'),
