@@ -19,3 +19,4 @@
 -- Test attendu : compter_par_genre pour 'Sport' donne 2.
 
 USE ludotheque;
+
