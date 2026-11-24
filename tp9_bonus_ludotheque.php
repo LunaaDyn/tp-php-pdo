@@ -7,12 +7,46 @@
      (dans le <title> et dans le <h1>)
   2. Un tableau de tous les jeux, du mieux noté au moins bien noté.
   3. Un lien « Supprimer » sur chaque ligne :
-     tp9_bonus_ludotheque.php?supprimer=ID
+     tp9_bonus_ludotheque.php?suprrimer=ID
   4. Un formulaire d'ajout de jeu (comme au TP 7).
 
   Les titres et genres affichés doivent être protégés.
   Test : ajouter un jeu dont le titre est <b>Test</b>. Que voit-on ?
 */
+
+require_once "connexion.php";
+
+if (isset($_POST["titre"]) && isset($_POST["genre"]) && isset($_POST["annee"]) && isset($_POST["note"])) {
+    $sql = "INSERT INTO jeu (titre, genre, annee, note) VALUES (:titre, :genre, :annee, :note)";
+
+    $result = $base->prepare($sql);
+
+
+    $result->execute([
+        "titre" => $_POST["titre"],
+        "genre" => $_POST["genre"],
+        "annee" => $_POST["annee"],
+        "note" => $_POST["note"],
+    ]);
+}
+
+if (isset($_GET["delete"])) {
+    $sql = 'DELETE FROM jeu WHERE id = ?';
+
+    $result = $base->prepare($sql);
+
+    $result->execute([$_GET["delete"]]);
+
+    $_GET = [];
+}
+
+$sql = "SELECT * FROM jeu ORDER BY note DESC";
+
+$result = $base->prepare($sql);
+
+$result->execute();
+
+$gameAmount = $result->rowCount();
 
 ?>
 <!DOCTYPE html>
@@ -20,11 +54,11 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Ma ludothèque</title>
+    <title>Ma ludothèque (<?= $gameAmount ?> jeux)</title>
 </head>
 
 <body>
-    <h1>Ma ludothèque</h1>
+    <h1>Ma ludothèque (<?= $gameAmount ?> jeux)</h1>
 
     <table border="1">
         <tr>
@@ -35,7 +69,15 @@
             <th></th>
         </tr>
         <?php
-
+        while ($line = $result->fetch(PDO::FETCH_ASSOC)) {
+            echo "<tr id=\"" . $line["id"] . "\">";
+            echo "<td>" . $line["titre"] . "</td>";
+            echo "<td>" . $line["genre"] . "</td>";
+            echo "<td>" . $line["annee"] . "</td>";
+            echo "<td>" . $line["note"] . "/20</td>";
+            echo "<td><a href=\"?delete=" . $line["id"] . "\">Supprimer</a></td>";
+            echo "</tr>";
+        }
         ?>
     </table>
 
@@ -43,7 +85,7 @@
     <form method="post">
         <p>Titre : <input type="text" name="titre" required></p>
         <p>Genre : <input type="text" name="genre" required></p>
-        <p>Année : <input type="number" name="annee" required></p>
+        <p>Année : <input type="number" name="annee" min="1970" max="2027" required></p>
         <p>Note : <input type="number" name="note" min="0" max="20" required></p>
         <button type="submit">Ajouter</button>
     </form>

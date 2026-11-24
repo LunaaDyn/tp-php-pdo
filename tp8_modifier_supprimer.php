@@ -12,14 +12,43 @@
 -->
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="utf-8">
     <title>TP 8 - Modifier et supprimer</title>
 </head>
-<body>
-<?php
 
-?>
+<body>
+    <?php
+    require_once "connexion.php";
+
+    if (!empty($_POST["id_modif"]) && $_POST["note"] >= 0 && $_POST["note"] <= 20) {
+        $info = [
+            "id" => $_POST["id_modif"],
+            "note" => $_POST["note"]
+        ];
+
+        $sql = 'UPDATE jeu SET note = :note WHERE id = :id';
+
+        $result = $base->prepare($sql);
+
+        $result->execute($info);
+
+        $result->closeCursor();
+    } else if (!empty($_POST["id_suppr"])) {
+        $info = [
+            "id" => $_POST["id_suppr"]
+        ];
+
+        $sql = 'DELETE FROM jeu WHERE id = :id';
+
+        $result = $base->prepare($sql);
+
+        $result->execute($info);
+
+        $result->closeCursor();
+    }
+    ?>
 
     <h2>Modifier une note</h2>
     <form method="post">
@@ -35,8 +64,19 @@
     </form>
 
     <h2>Liste des jeux</h2>
-<?php
+    <?php
+    $sql = "SELECT id, titre, note FROM jeu";
 
-?>
+    $result = $base->prepare($sql);
+
+    $result->execute();
+
+    while ($line = $result->fetch(PDO::FETCH_ASSOC)) {
+        echo "<p>" . $line["id"] . " - " . $line["titre"] . " (" . $line["note"] . "/20)</p>";
+    }
+
+    $result->closeCursor();
+    ?>
 </body>
+
 </html>
